@@ -60,4 +60,4 @@ export default function Shotor(username: string, password: string, documentSid: 
     hasTimer,
     setTimer,
   };
-};
+}
