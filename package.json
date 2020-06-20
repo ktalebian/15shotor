@@ -1,0 +1,30 @@
+{
+  "name": "@k88/15shotor",
+  "version": "0.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "lint": "eslint --ext ts src/",
+    "lint:fix": "npm run lint -- --fix",
+    "build": "tsc",
+    "prebuild": "rm -rf lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ktalebian/15shotor.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ktalebian/15shotor/issues"
+  },
+  "homepage": "https://github.com/ktalebian/15shotor#readme",
+  "dependencies": {
+    "@types/node": "^14.0.13",
+    "eslint": "^7.3.0",
+    "eslint-config-twilio-ts": "^1.26.0",
+    "twilio": "^3.46.0",
+    "typescript": "^3.9.5"
+  }
+}
