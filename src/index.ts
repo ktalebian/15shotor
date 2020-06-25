@@ -32,6 +32,7 @@ export const Shotor = (username: string, password: string, documentSid: string) 
   const client = getTwilio(username, password);
   const syncDocument = client.sync.services('default').documents(documentSid);
 
+  const TimerExceptionMessage = 'A timer is already set';
   const getState = async () => syncDocument.fetch();
   const getData = async (): Promise<AnimalData> => getState().then((resp) => resp.data);
   const getAnimalData = async (animal: Animal): Promise<Data> => getData().then((data) => data[animal]);
@@ -55,7 +56,7 @@ export const Shotor = (username: string, password: string, documentSid: string) 
   const hasTimer = async (animal: Animal) => getAnimalData(animal).then((data) => data.timer > Date.now());
   const setTimer = async (animal: Animal, amount: number) => {
     if (await hasTimer(animal)) {
-      throw new Error('A timer is already set');
+      throw new Error(TimerExceptionMessage);
     }
 
     return setState(animal, 'timer', amount);
@@ -70,6 +71,7 @@ export const Shotor = (username: string, password: string, documentSid: string) 
     decrementCount,
     hasTimer,
     setTimer,
+    TimerExceptionMessage,
   };
 };
 
@@ -108,7 +110,7 @@ export const Messenger = (username: string, password: string, from: string) => {
   const client = getTwilio(username, password);
   const sendMessage = async (body: string, to: string) => client.messages.create({ body, to, from });
 
-  const congratulations = async (animal: Animal, to: string) => {
+  const gotAnimal = async (animal: Animal, to: string) => {
     const emoji = animal === 'shotor' ? '🐪' : '🐏';
     return sendMessage(`Congratulations 🎉! You got a ${emoji}!`, to).then(() => true);
   };
@@ -131,7 +133,7 @@ export const Messenger = (username: string, password: string, from: string) => {
   };
 
   return {
-    congratulations,
+    gotAnimal,
     timerSet,
     timerExpired,
     didNotUnderstandOps,
