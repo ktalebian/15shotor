@@ -113,13 +113,27 @@ export const Messenger = (username: string, password: string, from: string) => {
     return sendMessage(`Congratulations 🎉! You got a ${emoji}!`, to).then(() => true);
   };
 
-  const timerSet = async (animal: Animal, timestamp: number, to: string) => {
+  const timerSet = async (timestamp: number, to: string) => {
     const date = new Date(timestamp).toString();
     return sendMessage(`Okh okh! You'll be badbakht on ${date}`, to).then(() => true);
+  };
+
+  const timerExpired = async (animal: Animal, to: string) => {
+    const emoji = animal === 'shotor' ? '🐪' : '🐏';
+
+    return sendMessage(`🙄. You did not use your ${emoji}. Aslan why? How do you even? Do you even?`, to).then(
+      () => true,
+    );
+  };
+
+  const didNotUnderstandOps = async (to: string) => {
+    return sendMessage('🤨, what? I have no idea what that means.', to).then(() => true);
   };
 
   return {
     congratulations,
     timerSet,
+    timerExpired,
+    didNotUnderstandOps,
   };
 };
